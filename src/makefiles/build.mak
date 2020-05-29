@@ -16,10 +16,15 @@ PSPSDK   = $(shell psp-config --pspsdk-path)
 endif
 
 # OS tools
-CP       = $(shell psp-config --pspdev-path)/bin/cp
-RM       = $(shell psp-config --pspdev-path)/bin/rm
-MKDIR    = $(shell psp-config --pspdev-path)/bin/mkdir
-TRUE    = $(shell psp-config --pspdev-path)/bin/true
+#CP       = $(shell psp-config --pspdev-path)/bin/cp
+#RM       = $(shell psp-config --pspdev-path)/bin/rm
+#MKDIR    = $(shell psp-config --pspdev-path)/bin/mkdir
+#TRUE    = $(shell psp-config --pspdev-path)/bin/true
+
+CP	= cp
+RM 	= rm
+MKDIR 	= mkdir
+TRUE	= true
 
 CC       = psp-gcc
 CXX      = psp-g++

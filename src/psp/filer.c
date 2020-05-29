@@ -10,6 +10,7 @@
 #include <pspwlan.h>
 #include "emumain.h"
 #include "zlib/zlib.h"
+#include <ctype.h>
 
 #define MAX_ENTRY 1024
 #define MAX_GAMES 512
@@ -912,6 +913,7 @@ void file_browser(void)
 	int i, sel = 0, rows = 11, top = 0;
 	int run_emulation = 0, update = 1, prev_sel = 0;
 	char *p;
+        char buf[128];
 #if (EMU_SYSTEM == NCDZ)
 	int title_counter = 60, title_image = -1;
 #endif
@@ -959,6 +961,9 @@ void file_browser(void)
 	uifont_print_shadow_center(136-07, 255,255,255, "for PSP");
 	uifont_print_shadow_center(136+ 6, 200,200,200, "NJ (http://nj-emu.tfact.net)");
 	uifont_print_shadow_center(136+20, 200,200,200, "2011-2016 (https://github.com/phoe-nix/NJEMU)");
+        sprintf(buf, "devkit_version=0x%08x", devkit_version);
+	uifont_print_shadow_center(136+34, 200,200,200, buf);
+
 #endif
 	video_flip_screen(1);
 
@@ -975,7 +980,8 @@ void file_browser(void)
 	getDir(curr_dir);
 
 #if defined(PSP_SLIM) && ((EMU_SYSTEM == CPS2) || (EMU_SYSTEM == MVS))
-	if (devkit_version < 0x03070110 || kuKernelGetModel() == PSP_MODEL_STANDARD)
+//	if (devkit_version < 0x03070110 || kuKernelGetModel() == PSP_MODEL_STANDARD)
+	if (devkit_version < 0x03070110 || sceKernelGetModel() == PSP_MODEL_STANDARD)
 	{
 		show_background();
 		small_icon_shadow(6, 3, UI_COLOR(UI_PAL_TITLE), ICON_SYSTEM);
@@ -1374,8 +1380,9 @@ void file_browser(void)
 			pad_wait_clear();
 		}
 /*PRESS TRIANGLE OR HOME TO EXIT IN FILEBROWSER */
-//		else if (pad_pressed(PSP_CTRL_TRIANGLE))
-		else if (pad_pressed(PSP_CTRL_TRIANGLE) || (readHomeButton()))
+		else if (pad_pressed(PSP_CTRL_TRIANGLE))
+//		else if (pad_pressed(PSP_CTRL_TRIANGLE) || (readHomeButton()))
+//		else if (pad_pressed(PSP_CTRL_TRIANGLE) || (readVolumeButtons()))
 		{
 			if (messagebox(MB_EXITEMULATION))
 			{

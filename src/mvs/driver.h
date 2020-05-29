@@ -503,4 +503,20 @@ STATE_SAVE( driver );
 STATE_LOAD( driver );
 #endif
 
+// formerly inline functions
+#ifdef NO_INLINE
+void adjust_display_position_interrupt(void);
+void set_main_cpu_vector_table_source(UINT8 data);
+void neogeo_set_palette_bank(UINT8 data);
+void set_videoram_offset(UINT16 data);
+UINT16 get_videoram_data(void);
+void set_videoram_data(UINT16 data);
+UINT16 get_videoram_modulo(void);
+void set_videoram_modulo(UINT16 data);
+UINT16 get_video_control(void);
+void set_video_control(UINT16 data);
+void neogeo_set_display_counter_msb(UINT16 data);
+void neogeo_set_display_counter_lsb(UINT16 data);
+void neogeo_acknowledge_interrupt(UINT16 data);
+#endif
 #endif /* MVS_DRIVER_H */

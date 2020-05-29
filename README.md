@@ -1,6 +1,24 @@
 NJEmu 2.3.5 is based on NJEmu 2.3.1.
 
 
+Modified for building on Linux 4.18.0-25-generic #26~18.04.1-Ubuntu SMP for PSP FAT(PSP1004)
+
+
+``` Using built-in specs.
+COLLECT_GCC=psp-gcc
+COLLECT_LTO_WRAPPER=/home/hylo/local/pspdev/libexec/gcc/psp/9.3.0/lto-wrapper
+Target: psp
+Configured with: ../configure --prefix=/home/hylo/local/pspdev --target=psp --enable-languages=c,c++ --enable-lto --with-newlib --enable-cxx-flags=-G0
+Thread model: single 
+``` 
+
+
+gcc version 9.3.0 (GCC)
+
+
+devkit_version=0x06060010
+
+
 ----------------------------------------------
 
 how to use:

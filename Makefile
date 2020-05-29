@@ -9,17 +9,18 @@
 #------------------------------------------------------------------------------
 
 #BUILD_CPS1PSP = 1
-BUILD_CPS2PSP = 1
-#BUILD_MVSPSP = 1
+#BUILD_CPS2PSP = 1
+BUILD_MVSPSP = 1
 #BUILD_NCDZPSP = 1
 
-PSP_SLIM = 1
+#PSP_SLIM = 1
 #KERNEL_MODE = 1
 COMMAND_LIST = 1
-ADHOC = 1
+#ADHOC = 1
 SAVE_STATE = 1
-UI_32BPP = 1
-#RELEASE = 1
+#UI_32BPP = 1
+RELEASE = 1
+#NO_INLINE = 1
 
 #------------------------------------------------------------------------------
 # Version
@@ -239,6 +240,8 @@ include src/makefiles/$(TARGET).mak
 
 CFLAGS = \
 	-O2 \
+	-G0 \
+	-mlong-calls \
 	-fomit-frame-pointer \
 	-fstrict-aliasing \
 	-falign-functions=32 \
@@ -253,13 +256,37 @@ CFLAGS = \
 	-Wmissing-prototypes \
 	-Wsign-compare \
 	-Werror \
-	-DZLIB_CONST
+	-DZLIB_CONST \
+	-Wno-error=format-overflow \
+	-Wno-error=strict-aliasing \
+	-Wno-error=misleading-indentation \
+	-Wno-error=array-bounds \
+	-Wno-error=restrict \
+	-Wno-error=memset-transposed-args \
+	-Wno-error=implicit-function-declaration \
+	-Wno-error=int-conversion \
+	-Wno-error=return-type \
+	-Wno-error=unused-function \
+	-Wno-error=unused-variable
 
+ 
 
 #------------------------------------------------------------------------------
 # Compiler Defines
 #------------------------------------------------------------------------------
 
+ifdef NO_INLINE
+CDEFS = -DINLINE='' \
+	-Dinline=__inline \
+	-D__inline__=__inline \
+	-DBUILD_$(TARGET)=1 \
+	-DPBPNAME_STR='"$(PBPNAME_STR)"' \
+	-DVERSION_STR='"$(VERSION_STR)"' \
+	-DVERSION_MAJOR=$(VERSION_MAJOR) \
+	-DVERSION_MINOR=$(VERSION_MINOR) \
+	-DVERSION_BUILD=$(VERSION_BUILD) \
+	-DPSP
+else
 CDEFS = -DINLINE='static __inline' \
 	-Dinline=__inline \
 	-D__inline__=__inline \
@@ -270,6 +297,8 @@ CDEFS = -DINLINE='static __inline' \
 	-DVERSION_MINOR=$(VERSION_MINOR) \
 	-DVERSION_BUILD=$(VERSION_BUILD) \
 	-DPSP
+endif
+
 
 ifdef PSP_SLIM
 CDEFS += -DPSP_SLIM=1
@@ -304,6 +333,10 @@ else
 CDEFS += -DRELEASE=0
 endif
 
+ifdef NO_INLINE
+CDEFS += -DNOINLINE=1
+endif
+
 #------------------------------------------------------------------------------
 # Linker Flags
 #------------------------------------------------------------------------------
@@ -320,7 +353,8 @@ LDFLAGS =
 # Library
 #------------------------------------------------------------------------------
 
-USE_PSPSDK_LIBC = 1
+#USE_PSPSDK_LIBC = 1 
+USE_PSPSDK_LIBC = 0 
 
 LIBS = -lm -lc -lpspaudio -lpspgu -lpsppower -lpsprtc
 
@@ -376,14 +410,14 @@ delelf:
 	@$(RM) -f $(TARGET).elf
 
 maketree:
-	@$(MD) 3xx
-	@$(MD) 3xx/cps1
-	@$(MD) 3xx/cps2
-	@$(MD) 3xx/mvs
-	@$(MD) 3xx/ncdz
-	@$(MD) slim
-	@$(MD) slim/cps1
-	@$(MD) slim/cps2
-	@$(MD) slim/mvs
-	@$(MD) slim/ncdz
+	@$(MD) 3XX
+	@$(MD) 3XX/CPS1
+	@$(MD) 3XX/CPS2
+	@$(MD) 3XX/MVS	
+	@$(MD) 3XX/NCDZ
+	@$(MD) SLIM
+	@$(MD) SLIM/CPS1
+	@$(MD) SLIM/CPS2
+	@$(MD) SLIM/MVS
+	@$(MD) SLIM/NCDZ
 	@$(MD) -p $(subst //,\,$(sort $(OBJDIRS)))

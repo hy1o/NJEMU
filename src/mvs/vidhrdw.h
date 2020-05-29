@@ -50,4 +50,9 @@ STATE_SAVE( video );
 STATE_LOAD( video );
 #endif
 
+#ifdef NO_INLINE
+// formerly inline
+int sprite_on_scanline(int scanline, int y, int rows);
+#endif
+
 #endif /* MVS_VIDEO_HARDWARE_H */

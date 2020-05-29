@@ -246,4 +246,18 @@ void set_ui_color(UI_PALETTE *pal, int r, int g, int b);
 
 void logo(int sx, int sy, int r, int g, int b);
 
+#ifdef NO_INLINE
+// formally inline functions..
+UINT16 uifont_get_code(const UINT8 *s, int *type);
+void uifont_draw(int sx, int sy, int r, int g, int b, const char *s);
+void uifont_draw_shadow(int sx, int sy, const char *s);
+void latin1_draw(int sx, int sy, int r, int g, int b, const char *s);
+void gbk_draw(int sx, int sy, int r, int g, int b, const char *s);
+UINT16 uifont_get_code(const UINT8 *s, int *type);
+void uifont_draw(int sx, int sy, int r, int g, int b, const char *s);
+void uifont_draw_shadow(int sx, int sy, const char *s);
+void latin1_draw(int sx, int sy, int r, int g, int b, const char *s);
+void gbk_draw(int sx, int sy, int r, int g, int b, const char *s);
+#endif
+
 #endif /* PSP_UI_DRAW_H */

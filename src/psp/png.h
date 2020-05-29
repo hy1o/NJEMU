@@ -12,4 +12,8 @@
 int load_png(const char *name, int number);
 int save_png(const char *path);
 
+#ifdef NO_INLINE
+// formally inline functions
+void adjust_blightness(UINT8 *r, UINT8 *g, UINT8 *b);
+#endif
 #endif /* PSP_PNG_H */
